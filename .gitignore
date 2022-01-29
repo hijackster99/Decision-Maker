@@ -60,6 +60,7 @@ sysinfo.txt
 *WwiseProject/*_WwiseProject.*.wsettings
 *WwiseProject/**/*.akd
 
+
 # build stuff (unsure?)
 # Assets/Wwise/Deployment/Plugins/Windows/**/*.meta
 
@@ -92,3 +93,4 @@ WwiseUnityIntegration_*_Src.zip
 # Assets/Plugins/Editor/Jetbrains.meta
 # Assets/Plugins/Editor/Jetbrains/
 # .idea
+Logs/*
