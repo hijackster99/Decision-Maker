@@ -13,6 +13,8 @@ public class DialogueController : MonoBehaviour
     [SerializeField] int charDelay;
 
     [SerializeField] DecisionHandler decisionHandler;
+    [SerializeField] CutsceneManager cutsceneManager;
+    [SerializeField] IconManager iconManager;
 
     private string dialogue = "";
     private int currentDelay = 0;
@@ -74,7 +76,7 @@ public class DialogueController : MonoBehaviour
                         }
                         else if (dialogue[currentIndex] == 'd')
                         {
-                            decisionHandler.MakeDecision(dialogue.Substring(currentIndex + 2, dialogue.IndexOf(')', currentIndex) - currentIndex - 2));
+                            decisionHandler.MakeDecision(dialogue.Substring(currentIndex + 2, dialogue.IndexOf(')', currentIndex) - currentIndex - 2), false);
                             currentIndex = dialogue.IndexOf(')', currentIndex);
                         }
                         else if (dialogue[currentIndex] == 'o')
@@ -110,6 +112,23 @@ public class DialogueController : MonoBehaviour
                         {
                             appendText -= 4;
                         }
+                        else if (dialogue[currentIndex] == 'n')
+                        {
+                            cutsceneManager.NextScene();
+                        }
+                        else if (dialogue[currentIndex] == 'a')
+                        {
+                            string responseComp = dialogue.Substring(currentIndex + 2, dialogue.IndexOf(')', currentIndex) - currentIndex - 2);
+                            currentIndex = dialogue.IndexOf(')', currentIndex);
+                            string[] responses = responseComp.Split('|');
+                            if (decisionHandler.outputNum == 0) dialogue = dialogue.Insert(currentIndex + 1, responses[0]);
+                            else dialogue = dialogue.Insert(currentIndex + 1, responses[1]);
+                        }
+                        else if (dialogue[currentIndex] == 'D')
+                        {
+                            decisionHandler.MakeDecision(dialogue.Substring(currentIndex + 2, dialogue.IndexOf(')', currentIndex) - currentIndex - 2), true);
+                            currentIndex = dialogue.IndexOf(')', currentIndex);
+                        }
                     }
                     else
                     {
@@ -124,7 +143,9 @@ public class DialogueController : MonoBehaviour
                 }
                 else
                 {
-                    currentIndex = 0;
+                    Debug.Log("Good Count: " + decisionHandler.goodCount);
+                    Debug.Log("Bad Count: " + decisionHandler.badCount);
+                    Debug.Log("Major Bad: " + decisionHandler.majorBad);
                 }
             }
             else
@@ -164,7 +185,7 @@ public class DialogueController : MonoBehaviour
                 }
                 else if (dialogue[currentIndex] == 'd')
                 {
-                    decisionHandler.MakeDecision(dialogue.Substring(currentIndex + 2, dialogue.IndexOf(')', currentIndex) - currentIndex - 2));
+                    decisionHandler.MakeDecision(dialogue.Substring(currentIndex + 2, dialogue.IndexOf(')', currentIndex) - currentIndex - 2), false);
                     currentIndex = dialogue.IndexOf(')', currentIndex);
                 }
                 else if (dialogue[currentIndex] == 'o')
@@ -214,6 +235,7 @@ public class DialogueController : MonoBehaviour
     {
         nameBox.text = "";
         nameBox.text += dialogue.Substring(currentIndex + 2, dialogue.IndexOf(')', currentIndex) - currentIndex - 2);
+        iconManager.LoadIcon(nameBox.text);
         currentIndex = dialogue.IndexOf(')', currentIndex);
     }
     
