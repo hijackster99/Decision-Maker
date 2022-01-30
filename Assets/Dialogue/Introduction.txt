@@ -21,7 +21,11 @@ This here is Terry, he is a very troubled child, and it is your job to help them
 \p\r
 Whenever they have to make a decision you will be presented with 2 choices: one \B\I\C(#1dc21d)GOOD\i\b\c and one \B\I\C(#980000)BAD\b\i\c. It will be your responsibility to pick the right choice in each scenario.
 \p\r
-She needs to make a decision now, try picking the \B\I\C(#1dc21d)GOOD\i\b\c decision.
+He needs to make a decision now, try picking the \B\I\C(#1dc21d)GOOD\i\b\c decision.
+\p
+\d(\ILet the ant go.\i|\IKill the ant.\i)
+\w\r
+\s(Terry)\o
 \p\r
 \s(???)Sir, someone needs your attention right now.
 \p\r
@@ -43,3 +47,64 @@ Get out!!!
 \p\r
 \s(The Boss)Sorry about that, but it looks like you have passed your training! Let's head to the case manager's office and get you assigned to a case.
 \p\r
+This is Steve, he's the lead case manager and he will be assigning you your first case.
+\p\r
+\s(Steve)Hello! How are you today?
+\p
+\d(I'm good!|\I...\i)
+\w\r
+\s()\o
+\p\r
+\s(Steve)Looking to start your first case?
+\p\r
+\s(The Boss)Yes he is!
+\p\r
+\s(Steve)Good, I have a case right now that needs someone assigned to it! Here you are, come with me to \B\IThe Link\i\b
+\p\r
+Here, this will allow us to communicate with each other accross realms. Someone will check in on you once you have arrived since it is your first time.
+\p\r
+Remember it can be rather disorienting! But you've got this!
+\p\r
+Are you ready?
+\p
+\d(Yep, all good!|Boy I'm nervous!)
+\w\r
+\s()\o
+\p\r
+\a(Great! here we go!|You'll do fine, trust me!)
+\p\r
+\s(Maddie)\II'm hungry today...\i
+\p
+\s()\d(\IHave a snack!\i|\IPass...\i)
+\w\r
+\o
+\p\r
+\s(Maddie)\a(I'll have some wheat thiccs|No, I really shouldn't...)
+\p\r
+Oh, that man just dropped his wallet!
+\p
+\d(\IReturn the wallet\i|\IIgnore it\i)
+\w\r
+\s()\o
+\p\r
+\s(Stranger)\a(Oh, thank you!|...)
+\p\r
+\s(Friend)Ha, I won again!
+\p\r
+\s(Maddie)grrrr.
+\p
+\d(\ITake a deep breath and keep playing\i|\IPush the kid over and leave\i)
+\w\r
+\s()\o
+\p\r
+\s(Maddie)\a(Ok, let's play again!|bye!)
+\p\r
+\s(???) Help me! Please!
+\p\r
+\s(Maddie)\IThat's John, he always bullied me at school.\i
+\p\r
+\s(John)Please...
+\p
+\D(\IHelp him up...\i|\IKill him...\i)
+\w\r
+\s(Maddie)\o
