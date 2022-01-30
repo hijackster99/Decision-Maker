@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,14 +8,19 @@ public class DialogueController : MonoBehaviour
 {
 
     [SerializeField] TextAsset dialogueFile;
-    [SerializeField] Text textField;
+    [SerializeField] Text dialogueBox;
+    [SerializeField] Text nameBox;
     [SerializeField] int charDelay;
+
+    [SerializeField] DecisionHandler decisionHandler;
 
     private string dialogue = "";
     private int currentDelay = 0;
     private int currentIndex = 0;
+    private int appendText = 0;
 
     bool pause = false;
+    bool wait = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,20 +33,17 @@ public class DialogueController : MonoBehaviour
     {
         if (Input.anyKeyDown)
         {
-            Debug.Log("Press");
             if (pause)
             {
-                textField.text = "";
                 pause = false;
             }
-            else FillToBreak();
+            else if(!wait) FillToBreak();
         }
     }
-
+    
     private void FixedUpdate()
     {
-        //Debug.Log(pause);
-        if (!pause)
+        if (!pause && !wait)
         {
             if (currentDelay <= 0)
             {
@@ -53,14 +56,67 @@ public class DialogueController : MonoBehaviour
                         {
                             pause = true;
                         }
-                        else if(dialogue[currentIndex] == '\\')
+                        else if (dialogue[currentIndex] == 'r')
                         {
-                            textField.text += '\\';
+                            dialogueBox.text = "";
+                        }
+                        else if (dialogue[currentIndex] == 'w')
+                        {
+                            wait = true;
+                        }
+                        else if (dialogue[currentIndex] == '\\')
+                        {
+                            AddText('\\');
+                        }
+                        else if (dialogue[currentIndex] == 's')
+                        {
+                            SetNameBox();
+                        }
+                        else if (dialogue[currentIndex] == 'd')
+                        {
+                            decisionHandler.MakeDecision(dialogue.Substring(currentIndex + 2, dialogue.IndexOf(')', currentIndex) - currentIndex - 2));
+                            currentIndex = dialogue.IndexOf(')', currentIndex);
+                        }
+                        else if (dialogue[currentIndex] == 'o')
+                        {
+                            dialogue = dialogue.Insert(currentIndex + 1, decisionHandler.output);
+                        }
+                        else if (dialogue[currentIndex] == 'C')
+                        {
+                            string color = dialogue.Substring(currentIndex + 2, dialogue.IndexOf(')', currentIndex) - currentIndex - 2);
+                            AddText("<color=" + color + "></color>");
+                            appendText += 8;
+                            currentIndex = dialogue.IndexOf(')', currentIndex);
+                        }
+                        else if (dialogue[currentIndex] == 'c')
+                        {
+                            appendText -= 8;
+                        }
+                        else if (dialogue[currentIndex] == 'B')
+                        {
+                            AddText("<b></b>");
+                            appendText += 4;
+                        }
+                        else if (dialogue[currentIndex] == 'I')
+                        {
+                            AddText("<i></i>");
+                            appendText += 4;
+                        }
+                        else if (dialogue[currentIndex] == 'b')
+                        {
+                            appendText -= 4;
+                        }
+                        else if (dialogue[currentIndex] == 'i')
+                        {
+                            appendText -= 4;
                         }
                     }
                     else
                     {
-                        textField.text += dialogue[currentIndex];
+                        if (dialogue[currentIndex] != '\n')
+                        {
+                            AddText(dialogue[currentIndex]);
+                        }
                     }
 
                     currentDelay = charDelay;
@@ -69,7 +125,6 @@ public class DialogueController : MonoBehaviour
                 else
                 {
                     currentIndex = 0;
-                    textField.text = "";
                 }
             }
             else
@@ -78,7 +133,7 @@ public class DialogueController : MonoBehaviour
             }
         }
     }
-
+    
     private void FillToBreak()
     {
         while (currentIndex < dialogue.Length)
@@ -91,18 +146,104 @@ public class DialogueController : MonoBehaviour
                     --currentIndex;
                     return;
                 }
+                else if (dialogue[currentIndex] == 'r')
+                {
+                    dialogueBox.text = "";
+                }
+                else if (dialogue[currentIndex] == 'w')
+                {
+                    wait = true;
+                }
                 else if(dialogue[currentIndex] == '\\')
                 {
-                    textField.text += dialogue[currentIndex];
-                    ++currentIndex;
+                    AddText(dialogue[currentIndex]);
+                }
+                else if (dialogue[currentIndex] == 's')
+                {
+                    SetNameBox();
+                }
+                else if (dialogue[currentIndex] == 'd')
+                {
+                    decisionHandler.MakeDecision(dialogue.Substring(currentIndex + 2, dialogue.IndexOf(')', currentIndex) - currentIndex - 2));
+                    currentIndex = dialogue.IndexOf(')', currentIndex);
+                }
+                else if (dialogue[currentIndex] == 'o')
+                {
+                    dialogue = dialogue.Insert(currentIndex + 1, decisionHandler.output);
+                }
+                else if (dialogue[currentIndex] == 'C')
+                {
+                    string color = dialogue.Substring(currentIndex + 2, dialogue.IndexOf(')', currentIndex) - currentIndex - 2);
+                    AddText("<color=" + color + "></color>");
+                    appendText += 8;
+                    currentIndex = dialogue.IndexOf(')', currentIndex);
+                }
+                else if (dialogue[currentIndex] == 'c')
+                {
+                    appendText -= 8;
+                }
+                else if (dialogue[currentIndex] == 'B')
+                {
+                    AddText("<b></b>");
+                    appendText += 4;
+                }
+                else if (dialogue[currentIndex] == 'I')
+                {
+                    AddText("<i></i>");
+                    appendText += 4;
+                }
+                else if (dialogue[currentIndex] == 'b')
+                {
+                    appendText -= 4;
+                }
+                else if (dialogue[currentIndex] == 'i')
+                {
+                    appendText -= 4;
                 }
             }
             else
             {
-                textField.text += dialogue[currentIndex];
-                ++currentIndex;
+                AddText(dialogue[currentIndex]);
             }
+            ++currentIndex;
         }
 
     }
+    
+    private void SetNameBox() 
+    {
+        nameBox.text = "";
+        nameBox.text += dialogue.Substring(currentIndex + 2, dialogue.IndexOf(')', currentIndex) - currentIndex - 2);
+        currentIndex = dialogue.IndexOf(')', currentIndex);
+    }
+    
+    public void MoveOn()
+    {
+        wait = false;
+    }
+
+    private void AddText(string text)
+    {
+        if (appendText > 0)
+        {
+            dialogueBox.text = dialogueBox.text.Insert(dialogueBox.text.Length - appendText, text);
+        }
+        else
+        {
+            dialogueBox.text += text;
+        }
+    }
+
+    private void AddText(char text)
+    {
+        if (appendText > 0)
+        {
+            dialogueBox.text = dialogueBox.text.Insert(dialogueBox.text.Length - appendText, new string(text, 1));
+        }
+        else
+        {
+            dialogueBox.text += text;
+        }
+    }
+
 }

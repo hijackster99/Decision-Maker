@@ -1,5 +1,2 @@
-This is some sample text.
-Test.
-Test.
-\pThis is a test of the pause function.
+This is a test of the \Bbold\b \IItalic\i and \C(#1dc21d)Color\c Systems
 \p
