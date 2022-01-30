@@ -1,0 +1,45 @@
+\s(The Boss)
+Why do you think you would be a good fit for this company?
+\p
+\d(I'm good with kids and think I can help.|I want to help the children of the world.)
+\w\r
+\s()\o
+\p\r
+\s(The Boss)Sounds wonderful. We will get you started right away, come with me.
+\p\r
+When you get assigned your first case, you might feel a little weird as you get transported to the Human Realm; don't worry about that too much, the feeling will pass
+\p\r
+These children that we try to help, they all have their own issues that impact their moral compass.
+\p\r
+The actions of others have had a severe negative impact on their ability to process the world around them.
+\p\r
+We basically take control of their decision making centers so we can show them how to be proper.
+\p\r
+Ahh, here we are, this is the case simulator. Here you will begin your training.
+\p\r
+This here is Terry, he is a very troubled child, and it is your job to help them.
+\p\r
+Whenever they have to make a decision you will be presented with 2 choices: one \B\I\C(#1dc21d)GOOD\i\b\c and one \B\I\C(#980000)BAD\b\i\c. It will be your responsibility to pick the right choice in each scenario.
+\p\r
+She needs to make a decision now, try picking the \B\I\C(#1dc21d)GOOD\i\b\c decision.
+\p\r
+\s(???)Sir, someone needs your attention right now.
+\p\r
+\s(The Boss)hrrmm Ok. stay here, I will be right back.
+\p\r
+\s(???)So, you're the new recruit eh?
+\p\r
+\s(Random Coworker)Oh, looks like Terry needs a decision made! Check this out, when presented with a decision you can also make a \B\I\C(#980000)BAD\b\i\c decision
+\p\r
+Check this out!
+\p\r
+Look at that loser!
+\p\r
+\s(The Boss)What are you doing here?!?
+\p\r
+Get out!!!
+\p\r
+\s(Random Coworker)Hey, make sure to pick some \B\I\C(#980000)BAD\b\i\c decisions for me, eh?
+\p\r
+\s(The Boss)Sorry about that, but it looks like you have passed your training! Let's head to the case manager's office and get you assigned to a case.
+\p\r
